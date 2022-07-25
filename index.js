@@ -3,8 +3,8 @@ const Discord = require('discord.js');
 const DiscordBot = require('./src/structures/DiscordBot');
 
 /* If Logs directory does not exist, create it */
-if (!fs.existsSync(`${__dirname}/src/logs`)) {
-    fs.mkdirSync(`${__dirname}/src/logs`);
+if (!fs.existsSync(`${__dirname}/logs`)) {
+    fs.mkdirSync(`${__dirname}/logs`);
 }
 
 const client = new DiscordBot({

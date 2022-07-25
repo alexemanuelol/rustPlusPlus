@@ -1,6 +1,6 @@
 const fs = require('fs');
 const { Collection, Client } = require('discord.js');
-const Config = require('../../config.json');
+const Config = require('../../config');
 const RustPlus = require('../structures/RustPlus');
 const Logger = require('./Logger.js');
 const path = require('path');
@@ -12,7 +12,7 @@ class DiscordBot extends Client {
     constructor(props) {
         super(props);
 
-        this.logger = new Logger(path.join(__dirname, '..', 'logs/discordBot.log'), 'default');
+        this.logger = new Logger(path.join(__dirname, '..', '..', 'logs/discordBot.log'), 'default');
 
         this.commands = new Collection();
         this.rustplusInstances = new Object();
@@ -93,11 +93,11 @@ class DiscordBot extends Client {
     }
 
     readInstanceFile(guildId) {
-        return JSON.parse(fs.readFileSync(`${__dirname}/../instances/${guildId}.json`, 'utf8'));
+        return JSON.parse(fs.readFileSync(`${__dirname}/../../instances/${guildId}.json`, 'utf8'));
     }
 
     writeInstanceFile(guildId, instance) {
-        fs.writeFileSync(`${__dirname}/../instances/${guildId}.json`, JSON.stringify(instance, null, 2));
+        fs.writeFileSync(`${__dirname}/../../instances/${guildId}.json`, JSON.stringify(instance, null, 2));
     }
 
     readCredentialsFile(guildId) {
@@ -129,11 +129,11 @@ class DiscordBot extends Client {
 
     createRustplusInstancesFromConfig() {
         /* If instances/ directory does not exist, create it */
-        if (!fs.existsSync(`${__dirname}/../instances`)) {
-            fs.mkdirSync(`${__dirname}/../instances`);
+        if (!fs.existsSync(`${__dirname}/../../instances`)) {
+            fs.mkdirSync(`${__dirname}/../../instances`);
         }
 
-        let files = fs.readdirSync(`${__dirname}/../instances`);
+        let files = fs.readdirSync(`${__dirname}/../../instances`);
 
         files.forEach(file => {
             if (file.endsWith('.json')) {
